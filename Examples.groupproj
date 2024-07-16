@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{59446C06-0C52-4EBE-978E-DC328ABDF2B3}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ShowProcessTree\ShowProcessTree.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FindRegistrySymlinks\FindRegistrySymlinks.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="EnumerateImports\EnumerateImports.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ShowProcessTree">
+        <MSBuild Projects="ShowProcessTree\ShowProcessTree.dproj"/>
+    </Target>
+    <Target Name="ShowProcessTree:Clean">
+        <MSBuild Projects="ShowProcessTree\ShowProcessTree.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ShowProcessTree:Make">
+        <MSBuild Projects="ShowProcessTree\ShowProcessTree.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FindRegistrySymlinks">
+        <MSBuild Projects="FindRegistrySymlinks\FindRegistrySymlinks.dproj"/>
+    </Target>
+    <Target Name="FindRegistrySymlinks:Clean">
+        <MSBuild Projects="FindRegistrySymlinks\FindRegistrySymlinks.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FindRegistrySymlinks:Make">
+        <MSBuild Projects="FindRegistrySymlinks\FindRegistrySymlinks.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="EnumerateImports">
+        <MSBuild Projects="EnumerateImports\EnumerateImports.dproj"/>
+    </Target>
+    <Target Name="EnumerateImports:Clean">
+        <MSBuild Projects="EnumerateImports\EnumerateImports.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EnumerateImports:Make">
+        <MSBuild Projects="EnumerateImports\EnumerateImports.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ShowProcessTree;FindRegistrySymlinks;EnumerateImports"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ShowProcessTree:Clean;FindRegistrySymlinks:Clean;EnumerateImports:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ShowProcessTree:Make;FindRegistrySymlinks:Make;EnumerateImports:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
