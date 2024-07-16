@@ -12,6 +12,12 @@
         <Projects Include="EnumerateImports\EnumerateImports.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="LogonInfoReflection\LogonInfoReflection.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ChildProcessPipe\ChildProcessPipe.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +53,32 @@
     <Target Name="EnumerateImports:Make">
         <MSBuild Projects="EnumerateImports\EnumerateImports.dproj" Targets="Make"/>
     </Target>
+    <Target Name="LogonInfoReflection">
+        <MSBuild Projects="LogonInfoReflection\LogonInfoReflection.dproj"/>
+    </Target>
+    <Target Name="LogonInfoReflection:Clean">
+        <MSBuild Projects="LogonInfoReflection\LogonInfoReflection.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LogonInfoReflection:Make">
+        <MSBuild Projects="LogonInfoReflection\LogonInfoReflection.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ChildProcessPipe">
+        <MSBuild Projects="ChildProcessPipe\ChildProcessPipe.dproj"/>
+    </Target>
+    <Target Name="ChildProcessPipe:Clean">
+        <MSBuild Projects="ChildProcessPipe\ChildProcessPipe.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ChildProcessPipe:Make">
+        <MSBuild Projects="ChildProcessPipe\ChildProcessPipe.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ShowProcessTree;FindRegistrySymlinks;EnumerateImports"/>
+        <CallTarget Targets="ShowProcessTree;FindRegistrySymlinks;EnumerateImports;LogonInfoReflection;ChildProcessPipe"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ShowProcessTree:Clean;FindRegistrySymlinks:Clean;EnumerateImports:Clean"/>
+        <CallTarget Targets="ShowProcessTree:Clean;FindRegistrySymlinks:Clean;EnumerateImports:Clean;LogonInfoReflection:Clean;ChildProcessPipe:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ShowProcessTree:Make;FindRegistrySymlinks:Make;EnumerateImports:Make"/>
+        <CallTarget Targets="ShowProcessTree:Make;FindRegistrySymlinks:Make;EnumerateImports:Make;LogonInfoReflection:Make;ChildProcessPipe:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
