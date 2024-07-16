@@ -7,3 +7,4 @@ Example                                                                        |
 [EnumerateImports.dpr](EnumerateImports/EnumerateImports.dpr)                  | Enumerate imports of an EXE or a DLL (360 KiB on x64)
 [LogonInfoReflection.dpr](LogonInfoReflection/LogonInfoReflection.dpr)         | Pretty-print the current logon session details via reflection (1.82 MiB on x64)
 [ChildProcessPipe.dpr](ChildProcessPipe/ChildProcessPipe.dpr)                  | Redirect standard I/O of a child process via anonymous pipes (437 KiB on x64)
+[RunAsHighIL](RunAsHighIL/RunAsHighIL.dpr)                                     | Spawn a high-integrity process from medium integrity via admin credentials (475 KiB on x64)

@@ -18,6 +18,9 @@
         <Projects Include="ChildProcessPipe\ChildProcessPipe.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="RunAsHighIL\RunAsHighIL.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -71,14 +74,23 @@
     <Target Name="ChildProcessPipe:Make">
         <MSBuild Projects="ChildProcessPipe\ChildProcessPipe.dproj" Targets="Make"/>
     </Target>
+    <Target Name="RunAsHighIL">
+        <MSBuild Projects="RunAsHighIL\RunAsHighIL.dproj"/>
+    </Target>
+    <Target Name="RunAsHighIL:Clean">
+        <MSBuild Projects="RunAsHighIL\RunAsHighIL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RunAsHighIL:Make">
+        <MSBuild Projects="RunAsHighIL\RunAsHighIL.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ShowProcessTree;FindRegistrySymlinks;EnumerateImports;LogonInfoReflection;ChildProcessPipe"/>
+        <CallTarget Targets="ShowProcessTree;FindRegistrySymlinks;EnumerateImports;LogonInfoReflection;ChildProcessPipe;RunAsHighIL"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ShowProcessTree:Clean;FindRegistrySymlinks:Clean;EnumerateImports:Clean;LogonInfoReflection:Clean;ChildProcessPipe:Clean"/>
+        <CallTarget Targets="ShowProcessTree:Clean;FindRegistrySymlinks:Clean;EnumerateImports:Clean;LogonInfoReflection:Clean;ChildProcessPipe:Clean;RunAsHighIL:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ShowProcessTree:Make;FindRegistrySymlinks:Make;EnumerateImports:Make;LogonInfoReflection:Make;ChildProcessPipe:Make"/>
+        <CallTarget Targets="ShowProcessTree:Make;FindRegistrySymlinks:Make;EnumerateImports:Make;LogonInfoReflection:Make;ChildProcessPipe:Make;RunAsHighIL:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
