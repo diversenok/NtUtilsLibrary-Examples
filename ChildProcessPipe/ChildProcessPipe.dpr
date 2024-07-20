@@ -104,7 +104,7 @@ begin
 
   repeat
     // Read a portion of program's output
-    Result := NtxReadFile(hxOutRead.Handle, @Buffer, SizeOf(Buffer), 0, nil,
+    Result := NtxReadFile(hxOutRead, @Buffer, SizeOf(Buffer), 0, nil,
       @BytesRead);
 
     // Gracefully exit on disconnect

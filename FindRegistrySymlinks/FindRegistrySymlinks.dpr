@@ -40,7 +40,7 @@ begin
     Name := RtlxCombinePaths(RootName, Name);
 
   // Query flags to determine if the key is a symlink
-  Result := NtxKey.Query(hxKey.Handle, KeyFlagsInformation, Flags);
+  Result := NtxKey.Query(hxKey, KeyFlagsInformation, Flags);
 
   if not Result.IsSuccess then
     Exit;
@@ -48,7 +48,7 @@ begin
   if BitTest(Flags.KeyFlags and REG_FLAG_LINK) then
   begin
     // It is a symlink; query the target
-    Result := NtxQueryValueKeyString(hxKey.Handle, REG_SYMLINK_VALUE_NAME,
+    Result := NtxQueryValueKeyString(hxKey, REG_SYMLINK_VALUE_NAME,
       SymlinkTarget);
 
     if Result.IsSuccess then

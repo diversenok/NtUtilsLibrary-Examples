@@ -154,7 +154,7 @@ begin
     procedure
     begin
       // Reset impersonation later
-      NtxSetThreadToken(NtCurrentThread, nil);
+      NtxSetThreadToken(NtxCurrentThread, nil);
     end
   );
 
@@ -174,14 +174,14 @@ begin
 
   // Grant accss to the current window station
   Result := RtlxGrantTemporaryAccess(WinStaDaclReverter,
-    Auto.RefHandle(UsrxCurrentWindowStation), LogonSid.Sid, WINSTA_ALL_ACCESS);
+    UsrxCurrentWindowStation, LogonSid.Sid, WINSTA_ALL_ACCESS);
 
   if not Result.IsSuccess then
     Exit;
 
   // Grant accss to the current desktop
-  Result := RtlxGrantTemporaryAccess(DesktopDaclReverter,
-    Auto.RefHandle(UsrxCurrentDesktop), LogonSid.Sid, DESKTOP_ALL_ACCESS);
+  Result := RtlxGrantTemporaryAccess(DesktopDaclReverter, UsrxCurrentDesktop,
+    LogonSid.Sid, DESKTOP_ALL_ACCESS);
 
   if not Result.IsSuccess then
     Exit;
@@ -210,7 +210,7 @@ begin
   DesktopDaclReverter.AutoRelease := False;
 
   // Continue
-  Result := NtxResumeThread(Info.hxThread.Handle);
+  Result := NtxResumeThread(Info.hxThread);
 end;
 
 procedure RunMain;
