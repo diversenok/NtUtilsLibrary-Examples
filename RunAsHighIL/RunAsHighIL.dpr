@@ -42,7 +42,7 @@ uses
   NtUiLib.Errors.Dialog;
 
 function RtlxGrantTemporaryAccess(
-  out AccessReverter: IAutoReleasable;
+  out AccessReverter: IDeferredOperation;
   const hxObject: IHandle;
   const Sid: ISid;
   AccessMask: TAccessMask
@@ -75,7 +75,7 @@ begin
   if not Result.IsSuccess then
     Exit;
 
-  AccessReverter := Auto.Delay(
+  AccessReverter := Auto.Defer(
     procedure
     begin
       // Restore the original DACL later
@@ -95,8 +95,8 @@ var
   Logon: TLogonInfo;
   LogonSid: TGroup;
   OurIntegeriy, TokenIntegrity: TIntegrityRid;
-  ImpersonationReverter, ProcessDaclReverter: IAutoReleasable;
-  WinStaDaclReverter, DesktopDaclReverter: IAutoReleasable;
+  ImpersonationReverter, ProcessDaclReverter: IDeferredOperation;
+  WinStaDaclReverter, DesktopDaclReverter: IDeferredOperation;
 begin
   // Ask for credentials on the secure desktop frist
   Result := CredxPromptForWindowsCredentials(0, MSG_CAPTION, MSG_TEXT,
@@ -150,7 +150,7 @@ begin
   if not Result.IsSuccess then
     Exit;
 
-  ImpersonationReverter := Auto.Delay(
+  ImpersonationReverter := Auto.Defer(
     procedure
     begin
       // Reset impersonation later
@@ -206,8 +206,8 @@ begin
   ImpersonationReverter := nil;
 
   // Don't restore DACLs on window station and desktop (the process needs them)
-  WinStaDaclReverter.AutoRelease := False;
-  DesktopDaclReverter.AutoRelease := False;
+  WinStaDaclReverter.Cancel;
+  DesktopDaclReverter.Cancel;
 
   // Continue
   Result := NtxResumeThread(Info.hxThread);

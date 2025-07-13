@@ -16,7 +16,7 @@ uses
 function Main: TNtxStatus;
 var
   FileName: String;
-  xMemory: IMemory;
+  MappedMemory: IMemory;
   Imports: TArray<TImportDllEntry>;
   Import: TImportDllEntry;
   FunctionEntry: TImportEntry;
@@ -32,14 +32,19 @@ begin
   end;
 
   // Open the file, create a section, and map it into the our process
-  Result := RtlxMapFileByName(xMemory, FileParameters
-    .UseFileName(FileName, fnWin32), PAGE_READONLY, SEC_COMMIT);
+  Result := RtlxMapFileByName(
+    FileParameters.UseFileName(FileName, fnWin32),
+    NtxCurrentProcess,
+    MappedMemory,
+    MappingParameters.UseProtection(PAGE_READONLY),
+    SEC_COMMIT
+  );
 
   if not Result.IsSuccess then
     Exit;
 
   // Parse the PE structure and find normal & delayed imports
-  Result := RtlxEnumerateImportImage(Imports, xMemory.Region, False,
+  Result := RtlxEnumerateImportImage(Imports, MappedMemory.Region, False,
     [itNormal, itDelayed]);
 
   if not Result.IsSuccess then
